@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
+
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 
 @Entity
@@ -17,6 +16,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @Data
+
 public class Product {
 
     @Id
@@ -34,7 +34,7 @@ public class Product {
 
     private Integer price;
 
-    @Type(type = "jsonb")
-    @Column(name = "product_fields", columnDefinition = "jsonb")
-    private Map<String, List<String>> productFields;
+    @Column(name = "properties")
+    @OneToMany(mappedBy="property")
+    private Set<Property> properties;
 }

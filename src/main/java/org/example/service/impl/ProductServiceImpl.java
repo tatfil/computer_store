@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product addProduct(ProductCreationDto productCreationDto) {
         Product product = Product.builder()
-                        .productFields(productCreationDto.getProductFields())
+                        .properties(productCreationDto.getProperties())
                         .price(productCreationDto.getPrice())
                         .brand(productCreationDto.getBrand())
                         .category(Category.valueOf(productCreationDto.getProductCategoryName()))
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
                         String.format("Incorrect product position id = %d transmitted", productDto.getId())));
         product.setPrice(productDto.getPrice());
         product.setName(productDto.getName());
-        product.setProductFields(productDto.getProductFields());
+        product.setProperties(productDto.getProperties());
         product.setBrand(productDto.getBrand());
         product.setCategory(Category.valueOf(productDto.getProductCategoryName()));
         return productRepository.save(product);
@@ -54,6 +54,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getByCategory(String category) {
-        return productRepository.findByCategory(category);
+
+        if(!contains(category))
+            throw new EntityNotFoundException(String.format("Incorrect category"));
+        return productRepository.findByCategory(Category.valueOf(category));
+    }
+
+    public static boolean contains(String test) {
+
+        for (Category c : Category.values()) {
+            if (c.name().equals(test)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

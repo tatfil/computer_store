@@ -1,11 +1,13 @@
 package org.example.model.dto.request;
 
 import lombok.*;
+import org.example.model.entity.Property;
 
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,8 +26,7 @@ public class ProductDto {
     @Size(max = 50)
     private String brand;
 
-    @NotEmpty(message = "Price may not be empty")
-    @Size(max = 50)
+    @NotNull(message = "Price may not be null")
     private Integer price;
 
     @NotEmpty(message = "Category may not be empty")
@@ -33,5 +34,6 @@ public class ProductDto {
     private String productCategoryName;
 
     @Size(max = 9)
-    private Map<String, List<String>> productFields;
+    @OneToMany(mappedBy="property")
+    private Set<Property> properties;
 }

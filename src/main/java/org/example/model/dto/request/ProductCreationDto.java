@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.model.entity.Property;
 
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Data
 @Builder
@@ -21,17 +23,17 @@ public class ProductCreationDto {
     private String name;
 
     @NotEmpty(message = "Brand may not be empty")
-    @Size(max = 50)
     private String brand;
 
-    @NotEmpty(message = "Price may not be empty")
-    @Size(max = 50)
+    @NotNull(message = "Price may not be null")
     private Integer price;
 
     @NotEmpty(message = "Category may not be empty")
     @Size(max = 50)
     private String productCategoryName;
 
+
     @Size(max = 9)
-    private Map<String, List<String>> productFields;
+    @OneToMany(mappedBy="property")
+    private Set<Property> properties;
 }

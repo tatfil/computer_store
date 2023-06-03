@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.model.dto.request.ProductCreationDto;
 import org.example.model.dto.request.ProductDto;
 import org.example.model.entity.Product;
-import org.example.service.ProductItemService;
 import org.example.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductItemService productItemService;
+
 
     @Operation(summary = "Add new product card")
     @ApiResponse(responseCode = "200", description = "Default product found correctly")
